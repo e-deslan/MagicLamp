@@ -1,2 +1,2 @@
 # MagicLamp
-Aplicativo Android para a comunicação com o nodeMCU através do MQTT e Mosquitto
+Aplicativo Android para a comunicação com o nodeMCU através do protocolo MQTT
