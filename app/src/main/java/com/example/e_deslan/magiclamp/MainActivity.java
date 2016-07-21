@@ -2,6 +2,7 @@ package com.example.e_deslan.magiclamp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,16 +21,22 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ConexaoMQTT.iniciaConexao();
     }
 
+    //finaliza a conexao com o broker quando o aplicativo termina
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ConexaoMQTT.finalizaConexao();
     }
 
-    public void publish(View v) {
+    public void conexao(View v){
+        Intent intent = new Intent(this, Config.class);
+        startActivity(intent);
+    }
+
+    //funcao chamada quando a chave eh alterada
+    public void publica(View v) {
         Switch chave = (Switch) findViewById(R.id.switch1);
         String comando = "";
         if (chave.isChecked()){
@@ -58,15 +65,16 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected Void doInBackground(String... params) {
 
-            String topico = "lampada";
+            String topico = "led";
             String comando = params[0];
             int qos = 2;
             try {
-                MqttClient cliente = ConexaoMQTT.getConexao_broker();
+                MqttClient cliente = ConexaoMQTT.getCliente();
                 MqttMessage message = new MqttMessage(comando.getBytes());
                 message.setQos(qos);
                 cliente.publish(topico, message);
                 cliente.setTimeToWait(2000);
+
                 MainActivity.this.runOnUiThread(new Runnable() {
 
                     @Override

@@ -15,9 +15,20 @@
         android:id="@+id/switch1"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="59dp"
-        android:text="Lâmpada 1"
+        android:text="LED 1"
         android:textOn="ligar"
         android:textOff="desligar"
-        android:onClick="publish"
+        android:onClick="publica"
         android:layout_centerVertical="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Conexão Broker"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:onClick="conexao"/>
+
 </RelativeLayout>
