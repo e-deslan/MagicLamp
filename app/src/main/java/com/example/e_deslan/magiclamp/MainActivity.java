@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v) {   //onClickListener para todas chaves dos LEDs
         String comando = "";
         switch (v.getId()) {
             case R.id.switch1:
@@ -95,26 +95,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //finaliza a conexao com o broker
     public void finaliza(View v) {
         ConexaoMQTT.finalizaConexao();
     }
 
-    public void conexao(View v){
+    //vai pra tela de configuracao do broker
+    public void config(View v){
         Intent intent = new Intent(this, Config.class);
         startActivity(intent);
         finish();
-    }
-
-    //funcao chamada quando a chave eh alterada
-    public void publica(View v) {
-        Switch chave = (Switch) findViewById(R.id.switch1);
-        String comando = "";
-        if (chave.isChecked()){
-            comando = "ligar";
-        }
-        else{
-            comando = "desligar";
-        }
-        ConexaoMQTT.publica("led", comando);
     }
 }
