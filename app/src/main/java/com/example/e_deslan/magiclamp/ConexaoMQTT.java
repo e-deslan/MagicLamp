@@ -1,5 +1,7 @@
 package com.example.e_deslan.magiclamp;
 
+import android.widget.Switch;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -11,11 +13,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 /**
  * Created by e-deslan on 28/06/16.
  */
-public class ConexaoMQTT{
+public class ConexaoMQTT {
 
     private static MqttClient clienteMQTT = null;
 
-    public static void iniciaConexao(String host, String porta){
+    public static void iniciaConexao(String host, String porta) {
         String broker = "tcp://" + host + ":" + porta;
         String nomeCliente = "controlador";
         MemoryPersistence persistence = new MemoryPersistence();
@@ -47,37 +49,52 @@ public class ConexaoMQTT{
             //inicia conexao como o broker
             clienteMQTT.connect(opcoes_de_conexao);
             //se inscreve no topico
-            clienteMQTT.subscribe("led");
-        }
-        catch (MqttException e){
+            clienteMQTT.subscribe("led/#");
+        } catch (MqttException e) {
             System.out.println("Nao conseguiu criar cliente no broker");
             e.printStackTrace();
         }
 
     }
 
-    public static void finalizaConexao(){
-        if (clienteMQTT != null){
+    public static void finalizaConexao() {
+        if (clienteMQTT != null) {
             try {
                 clienteMQTT.disconnect();
-            }
-            catch (MqttException e){
+            } catch (MqttException e) {
                 System.out.println("Nao conseguiu desconectar cliente do broker");
                 e.printStackTrace();
             }
         }
     }
 
-    public static MqttClient getCliente(){
+    public static MqttClient getCliente() {
         return clienteMQTT;
     }
 
-    public static boolean existeConexao(){
-        if(clienteMQTT != null){
+    public static boolean existeConexao() {
+        if (clienteMQTT != null) {
             return true;
-        }
-        else{
+        } else {
             return false;
+        }
+    }
+
+    public static void publica(String topico, String comando) {
+        int qos = 2;
+        try {
+            MqttMessage msg = new MqttMessage(comando.getBytes());
+            msg.setQos(qos);
+            clienteMQTT.publish(topico, msg);
+            clienteMQTT.setTimeToWait(2000);
+        }
+        catch (MqttException me) {
+            System.out.println("reason " + me.getReasonCode());
+            System.out.println("msg " + me.getMessage());
+            System.out.println("loc " + me.getLocalizedMessage());
+            System.out.println("cause " + me.getCause());
+            System.out.println("excep " + me);
+            me.printStackTrace();
         }
     }
 }

@@ -13,7 +13,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ProgressDialog progress;
 
@@ -21,18 +21,88 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Switch chave1 = (Switch) findViewById(R.id.switch1);
+        chave1.setOnClickListener(this);
+        Switch chave2 = (Switch) findViewById(R.id.switch2);
+        chave2.setOnClickListener(this);
+        Switch chave3 = (Switch) findViewById(R.id.switch3);
+        chave3.setOnClickListener(this);
+        Switch chave4 = (Switch) findViewById(R.id.switch4);
+        chave4.setOnClickListener(this);
+        Switch chave5 = (Switch) findViewById(R.id.switch5);
+        chave5.setOnClickListener(this);
     }
 
-    //finaliza a conexao com o broker quando o aplicativo termina
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onClick(View v) {
+        String comando = "";
+        switch (v.getId()) {
+            case R.id.switch1:
+                Switch s1 = (Switch) findViewById(R.id.switch1);
+                if (s1.isChecked()){
+                    comando = "ligar";
+                }
+                else{
+                    comando = "desligar";
+                }
+                ConexaoMQTT.publica("led/1", comando);
+                break;
+            case R.id.switch2:
+                Switch s2 = (Switch) findViewById(R.id.switch2);
+                if (s2.isChecked()){
+                    comando = "ligar";
+                }
+                else{
+                    comando = "desligar";
+                }
+                ConexaoMQTT.publica("led/2", comando);
+                break;
+            case R.id.switch3:
+                Switch s3 = (Switch) findViewById(R.id.switch3);
+                if (s3.isChecked()){
+                    comando = "ligar";
+                }
+                else{
+                    comando = "desligar";
+                }
+                ConexaoMQTT.publica("led/3", comando);
+                break;
+            case R.id.switch4:
+                Switch s4 = (Switch) findViewById(R.id.switch4);
+                if (s4.isChecked()){
+                    comando = "ligar";
+                }
+                else{
+                    comando = "desligar";
+                }
+                ConexaoMQTT.publica("led/4", comando);
+                break;
+            case R.id.switch5:
+                Switch s5 = (Switch) findViewById(R.id.switch5);
+                if (s5.isChecked()){
+                    comando = "ligar";
+                }
+                else{
+                    comando = "desligar";
+                }
+                ConexaoMQTT.publica("led/1", comando);
+                ConexaoMQTT.publica("led/2", comando);
+                ConexaoMQTT.publica("led/3", comando);
+                ConexaoMQTT.publica("led/4", comando);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void finaliza(View v) {
         ConexaoMQTT.finalizaConexao();
     }
 
     public void conexao(View v){
         Intent intent = new Intent(this, Config.class);
         startActivity(intent);
+        finish();
     }
 
     //funcao chamada quando a chave eh alterada
@@ -45,52 +115,6 @@ public class MainActivity extends AppCompatActivity{
         else{
             comando = "desligar";
         }
-        new PublishAsyncTask(this).execute(comando);
-    }
-
-    private class PublishAsyncTask extends AsyncTask<String, Void, Void>{
-
-        final Context context;
-
-        public PublishAsyncTask(Context c){
-            this.context = c;
-        }
-
-        protected void onPreExecute(){
-            progress = new ProgressDialog(this.context);
-            progress.setMessage("Publishing...");
-            progress.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-
-            String topico = "led";
-            String comando = params[0];
-            int qos = 2;
-            try {
-                MqttClient cliente = ConexaoMQTT.getCliente();
-                MqttMessage message = new MqttMessage(comando.getBytes());
-                message.setQos(qos);
-                cliente.publish(topico, message);
-                cliente.setTimeToWait(2000);
-
-                MainActivity.this.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        progress.dismiss();
-                    }
-                });
-            } catch (MqttException me) {
-                System.out.println("reason " + me.getReasonCode());
-                System.out.println("msg " + me.getMessage());
-                System.out.println("loc " + me.getLocalizedMessage());
-                System.out.println("cause " + me.getCause());
-                System.out.println("excep " + me);
-                me.printStackTrace();
-            }
-            return null;
-        }
+        ConexaoMQTT.publica("led", comando);
     }
 }
