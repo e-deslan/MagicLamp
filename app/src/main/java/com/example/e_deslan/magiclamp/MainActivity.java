@@ -36,9 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {   //onClickListener para todas chaves dos LEDs
         String comando = "";
+        Switch s1 = (Switch) findViewById(R.id.switch1);
+        Switch s2 = (Switch) findViewById(R.id.switch2);
+        Switch s3 = (Switch) findViewById(R.id.switch3);
+        Switch s4 = (Switch) findViewById(R.id.switch4);
+        Switch s5 = (Switch) findViewById(R.id.switch5);
         switch (v.getId()) {
             case R.id.switch1:
-                Switch s1 = (Switch) findViewById(R.id.switch1);
                 if (s1.isChecked()){
                     comando = "ligar";
                 }
@@ -48,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ConexaoMQTT.publica("led/1", comando);
                 break;
             case R.id.switch2:
-                Switch s2 = (Switch) findViewById(R.id.switch2);
                 if (s2.isChecked()){
                     comando = "ligar";
                 }
@@ -58,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ConexaoMQTT.publica("led/2", comando);
                 break;
             case R.id.switch3:
-                Switch s3 = (Switch) findViewById(R.id.switch3);
                 if (s3.isChecked()){
                     comando = "ligar";
                 }
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ConexaoMQTT.publica("led/3", comando);
                 break;
             case R.id.switch4:
-                Switch s4 = (Switch) findViewById(R.id.switch4);
                 if (s4.isChecked()){
                     comando = "ligar";
                 }
@@ -78,17 +79,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ConexaoMQTT.publica("led/4", comando);
                 break;
             case R.id.switch5:
-                Switch s5 = (Switch) findViewById(R.id.switch5);
                 if (s5.isChecked()){
                     comando = "ligar";
+                    s1.setChecked(true);
+                    s2.setChecked(true);
+                    s3.setChecked(true);
+                    s4.setChecked(true);
                 }
                 else{
                     comando = "desligar";
+                    s1.setChecked(false);
+                    s2.setChecked(false);
+                    s3.setChecked(false);
+                    s4.setChecked(false);
                 }
                 ConexaoMQTT.publica("led/1", comando);
                 ConexaoMQTT.publica("led/2", comando);
                 ConexaoMQTT.publica("led/3", comando);
                 ConexaoMQTT.publica("led/4", comando);
+
                 break;
             default:
                 break;
