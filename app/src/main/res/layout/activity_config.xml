@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:text="Conectar"
         android:id="@+id/button_conectar"
-        android:onClick="Conectar"
+        android:onClick="conectar"
         android:layout_below="@+id/editText_porta"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="78dp" />

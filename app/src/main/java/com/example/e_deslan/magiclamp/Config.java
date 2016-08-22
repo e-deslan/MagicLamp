@@ -22,7 +22,7 @@ public class Config extends AppCompatActivity {
         et_porta.setText(sp.getString("porta", ""));
     }
 
-    public void Conectar(View v){
+    public void conectar(View v){
         //salva os valores de host e porta para serem utilizados na proxima vez
         SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();

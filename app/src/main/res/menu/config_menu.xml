@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/config_broker"
+        android:title="Conexão Broker" />
+    <item android:id="@+id/desconectar"
+        android:title="Desconectar"
+        app:showAsAction="never" />
+</menu>

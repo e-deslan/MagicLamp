@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch1"
+        android:onClick="atuar"
         android:text="LED 1"
         android:textOn="ligar"
         android:textOff="desligar"
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="LED 2"
         android:id="@+id/switch2"
+        android:onClick="atuar"
         android:textOn="ligar"
         android:textOff="desligar"
         android:layout_below="@+id/switch1"
@@ -36,6 +38,7 @@
         android:layout_height="wrap_content"
         android:text="LED 3"
         android:id="@+id/switch3"
+        android:onClick="atuar"
         android:textOn="ligar"
         android:textOff="desligar"
         android:layout_below="@+id/switch2"
@@ -48,6 +51,7 @@
         android:layout_height="wrap_content"
         android:text="LED 4"
         android:id="@+id/switch4"
+        android:onClick="atuar"
         android:textOn="ligar"
         android:textOff="desligar"
         android:layout_below="@+id/switch3"
@@ -60,30 +64,23 @@
         android:layout_height="wrap_content"
         android:text="Todos LEDs"
         android:id="@+id/switch5"
+        android:onClick="atuar"
         android:layout_below="@+id/switch4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
         android:textOn="ligar"
         android:textOff="desligar" />
 
-    <Button
+    <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Conexão Broker"
-        android:id="@+id/button2"
-        android:layout_marginBottom="16dp"
-        android:onClick="config"
-        android:layout_above="@+id/button"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finaliza Conexão"
-        android:onClick="finaliza"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:id="@+id/switch6"
+        android:layout_below="@+id/switch5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp"
+        android:clickable="false"
+        android:textOn="On"
+        android:textOff="Off" />
 
 </RelativeLayout>
